@@ -10,7 +10,7 @@ import com.fiap.dimdimcp2.repository.ItemPedidoRepository;
 import com.fiap.dimdimcp2.repository.PedidoRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional; // <--- importe aqui
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -31,6 +31,7 @@ public class PedidoController {
         this.itens = itens;
     }
 
+    @Transactional(readOnly = true) // <--- ajuste
     @GetMapping
     public List<Pedido> listar() {
         return pedidos.findAll();

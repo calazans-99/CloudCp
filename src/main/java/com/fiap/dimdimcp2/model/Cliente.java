@@ -1,31 +1,35 @@
-// src/main/java/com/fiap/dimdimcp2/model/Cliente.java
 package com.fiap.dimdimcp2.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import java.time.OffsetDateTime;
 
-@Entity @Table(name = "cliente")
+@Entity
 public class Cliente {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
-  @NotBlank @Column(nullable=false, length=120)
-  private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @NotBlank @Email @Column(nullable=false, unique=true, length=120)
-  private String email;
+    private String nome;
 
-  @Column(name="criado_em", nullable=false, columnDefinition="datetimeoffset")
-  private OffsetDateTime criadoEm = OffsetDateTime.now();
+    @Column(unique = true, nullable = false)
+    private String email;
 
+    // Se você tiver o relacionamento reverso, mantenha-o ignorado no JSON
+    // para evitar ciclos e payloads enormes. Descomente se existir na sua DDL.
+    //
+    // @OneToMany(mappedBy = "cliente")
+    // @com.fasterxml.jackson.annotation.JsonIgnore
+    // private java.util.List<Pedido> pedidos = new java.util.ArrayList<>();
+
+    public Cliente() {}
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
+
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public OffsetDateTime getCriadoEm() { return criadoEm; }
-    public void setCriadoEm(OffsetDateTime criadoEm) { this.criadoEm = criadoEm; }
 }

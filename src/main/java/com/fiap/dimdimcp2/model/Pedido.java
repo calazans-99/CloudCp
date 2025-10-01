@@ -1,31 +1,57 @@
-// src/main/java/com/fiap/dimdimcp2/model/Pedido.java
 package com.fiap.dimdimcp2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity @Table(name = "pedido")
+@Entity
 public class Pedido {
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
-  @ManyToOne(optional=false, fetch=FetchType.LAZY)
-  @JoinColumn(name="cliente_id", nullable=false)
-  private Cliente cliente;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(name="data_pedido", nullable=false, columnDefinition="datetimeoffset")
-  private OffsetDateTime dataPedido = OffsetDateTime.now();
+    // cliente pode ser LAZY, mas evite expor os proxies no JSON
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    private Cliente cliente;
 
-  @NotBlank @Column(nullable=false, length=30)
-  private String status = "ABERTO";
+    private String status;
 
+    @OneToMany(
+            mappedBy = "pedido",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference // lado "pai" para o Jackson
+    private List<ItemPedido> itens = new ArrayList<>();
+
+    public Pedido() {}
+
+    // helpers opcionais
+    public void addItem(ItemPedido item) {
+        itens.add(item);
+        item.setPedido(this);
+    }
+
+    public void removeItem(ItemPedido item) {
+        itens.remove(item);
+        item.setPedido(null);
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
-    public OffsetDateTime getDataPedido() { return dataPedido; }
-    public void setDataPedido(OffsetDateTime dataPedido) { this.dataPedido = dataPedido; }
+
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public List<ItemPedido> getItens() { return itens; }
+    public void setItens(List<ItemPedido> itens) { this.itens = itens; }
 }

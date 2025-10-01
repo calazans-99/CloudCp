@@ -5,6 +5,7 @@ import com.fiap.dimdimcp2.model.Cliente;
 import com.fiap.dimdimcp2.repository.ClienteRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional; // <--- importe aqui
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,6 +20,7 @@ public class ClienteController {
         this.repo = repo;
     }
 
+    @Transactional(readOnly = true) // <--- ajuste
     @GetMapping
     public List<Cliente> listar() {
         return repo.findAll();
