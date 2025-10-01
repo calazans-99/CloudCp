@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "pedido")
+@Table(name = "pedido", schema = "dbo")
 public class Pedido {
 
     @Id
@@ -38,24 +38,17 @@ public class Pedido {
         item.setPedido(this);
         this.itens.add(item);
     }
-
-    public void addItens(List<ItemPedido> itens) {
-        itens.forEach(this::addItem);
-    }
+    public void addItens(List<ItemPedido> itens) { itens.forEach(this::addItem); }
 
     // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
-
     public OffsetDateTime getDataPedido() { return dataPedido; }
     public void setDataPedido(OffsetDateTime dataPedido) { this.dataPedido = dataPedido; }
-
     public PedidoStatus getStatus() { return status; }
     public void setStatus(PedidoStatus status) { this.status = status; }
-
     public List<ItemPedido> getItens() { return itens; }
     public void setItens(List<ItemPedido> itens) { this.itens = itens; }
 }

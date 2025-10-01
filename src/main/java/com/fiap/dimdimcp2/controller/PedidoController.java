@@ -65,7 +65,7 @@ public class PedidoController {
     @GetMapping("/{id}/itens")
     public ResponseEntity<List<ItemPedido>> listarItens(@PathVariable Long id) {
         if (!pedidos.existsById(id)) return ResponseEntity.notFound().build();
-        var itens = itensRepo.findByPedidoId(id);
+        var itens = itensRepo.findByPedidoId(id);  // evita LazyInitializationException
         return ResponseEntity.ok(itens);
     }
 

@@ -1,4 +1,5 @@
 com\fiap\dimdimcp2\model\Cliente.class
+com\fiap\dimdimcp2\api\ApiExceptionHandler.class
 com\fiap\dimdimcp2\dto\AtualizarStatusDTO.class
 com\fiap\dimdimcp2\dto\NovoItemPedidoDTO.class
 com\fiap\dimdimcp2\dto\AtualizarClienteDTO.class

@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "cliente")
+@Table(name = "cliente", schema = "dbo")
 public class Cliente {
 
     @Id

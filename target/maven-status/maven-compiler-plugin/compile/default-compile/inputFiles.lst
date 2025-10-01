@@ -9,6 +9,7 @@ D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\controller\ClienteController.ja
 D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\dto\NovoClienteDTO.java
 D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\dto\NovoPedidoDTO.java
 D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\dto\AtualizarPedidoDTO.java
+D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\api\ApiExceptionHandler.java
 D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\model\ItemPedido.java
 D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\repository\ClienteRepository.java
 D:\cpcloud\java\src\main\java\com\fiap\dimdimcp2\repository\PedidoRepository.java

@@ -1,11 +1,10 @@
 package com.fiap.dimdimcp2.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "item_pedido")
+@Table(name = "item_pedido", schema = "dbo")
 public class ItemPedido {
 
     @Id
