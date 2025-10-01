@@ -65,15 +65,27 @@
 
   <build>
     <plugins>
+      <!-- Gera fat JAR executável com MANIFEST correto -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
+          <!-- explicita a main class -->
+          <mainClass>com.fiap.dimdimcp2.DimdimCp2Application</mainClass>
           <image>
             <builder>paketobuildpacks/builder-jammy-base</builder>
           </image>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
