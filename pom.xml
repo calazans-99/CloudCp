@@ -12,7 +12,7 @@
   <properties>
     <java.version>17</java.version>
     <spring.boot.version>3.3.5</spring.boot.version>
-    <!-- Mantenha flyway-core e flyway-sqlserver na MESMA versão -->
+    <!-- Mantenha as versões de flyway-core e flyway-sqlserver iguais -->
     <flyway.version>10.10.0</flyway.version>
   </properties>
 
@@ -47,14 +47,14 @@
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
 
-    <!-- Driver SQL Server -->
+    <!-- Driver do SQL Server -->
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Flyway core + módulo do SQL Server (ESSENCIAL) -->
+    <!-- Flyway core + módulo do SQL Server -->
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
@@ -79,7 +79,7 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
-    <!-- Teste (opcional) -->
+    <!-- Testes (opcional) -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -89,14 +89,23 @@
 
   <build>
     <plugins>
+      <!-- Gera o FAT JAR com o Boot Loader -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
+          <mainClass>com.fiap.dimdimcp2.DimdimCp2Application</mainClass>
           <image>
             <builder>paketobuildpacks/builder-jammy-base</builder>
           </image>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
