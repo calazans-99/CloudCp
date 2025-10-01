@@ -62,24 +62,18 @@ public class PedidoController {
             @PathVariable("id") Long id,
             @RequestBody @Valid NovoItemPedidoDTO dto) {
 
-        // valida se o pedido do path e do body são iguais
-        if (!id.equals(dto.pedidoId())) {
-            return ResponseEntity.badRequest().body("O pedidoId do body difere do path");
-        }
-
         Optional<Pedido> pedidoOpt = pedidos.findById(id);
         if (pedidoOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         Pedido pedido = pedidoOpt.get();
+
         ItemPedido item = new ItemPedido();
         item.setPedido(pedido);
-        item.setDescricao(dto.descricao());
-        item.setQuantidade(dto.quantidade());
-        item.setValorUnitario(
-                dto.valorUnitario() == null ? BigDecimal.ZERO : dto.valorUnitario()
-        );
+        item.setDescricao(dto.getDescricao());
+        item.setQuantidade(dto.getQuantidade());
+        item.setValorUnitario(dto.getValorUnitario() == null ? BigDecimal.ZERO : dto.getValorUnitario());
 
         ItemPedido salvo = itens.save(item);
 
@@ -87,4 +81,5 @@ public class PedidoController {
                 .created(URI.create("/api/pedidos/" + id + "/itens/" + salvo.getId()))
                 .body(salvo);
     }
+
 }

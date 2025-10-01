@@ -9,61 +9,57 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.net.URI;
-import java.util.List;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/itens")
+@RequestMapping("/api/pedidos")
 public class ItemPedidoController {
 
-    private final ItemPedidoRepository itemRepo;
-    private final PedidoRepository pedidoRepo;
+    private final PedidoRepository pedidoRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
 
-    public ItemPedidoController(ItemPedidoRepository itemRepo, PedidoRepository pedidoRepo) {
-        this.itemRepo = itemRepo;
-        this.pedidoRepo = pedidoRepo;
+    public ItemPedidoController(PedidoRepository pedidoRepository,
+                                ItemPedidoRepository itemPedidoRepository) {
+        this.pedidoRepository = pedidoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
-    // GET /api/itens -> lista todos os itens
-    @GetMapping
-    public List<ItemPedido> listarTodos() {
-        return itemRepo.findAll();
-    }
+    @PostMapping("/{id}/itens")
+    public ResponseEntity<?> adicionarItem(@PathVariable("id") Long id,
+                                           @RequestBody @Valid NovoItemPedidoDTO dto) {
+        Optional<Pedido> pedidoOpt = pedidoRepository.findById(id);
+        if (pedidoOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Pedido não encontrado", "id", id));
+        }
 
-    // GET /api/itens/{id} -> busca um item específico
-    @GetMapping("/{id}")
-    public ResponseEntity<ItemPedido> buscarPorId(@PathVariable Long id) {
-        return itemRepo.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // POST /api/itens -> cria um item em um pedido existente
-    @PostMapping
-    public ResponseEntity<ItemPedido> criar(@RequestBody @Valid NovoItemPedidoDTO dto) {
-        Pedido pedido = pedidoRepo.findById(dto.pedidoId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pedido não encontrado"));
+        Pedido pedido = pedidoOpt.get();
 
         ItemPedido item = new ItemPedido();
+        item.setDescricao(dto.getDescricao());
+        item.setQuantidade(dto.getQuantidade());
+        item.setValorUnitario(dto.getValorUnitario());
         item.setPedido(pedido);
-        item.setDescricao(dto.descricao());
-        item.setQuantidade(dto.quantidade());
-        item.setValorUnitario(dto.valorUnitario());
 
-        ItemPedido salvo = itemRepo.save(item);
+        // Persistimos o item
+        item = itemPedidoRepository.save(item);
 
-        return ResponseEntity
-                .created(URI.create("/api/itens/" + salvo.getId()))
-                .body(salvo);
+        // Mantém o lado dono e o inverso do relacionamento sincronizado
+        if (pedido.getItens() == null) {
+            pedido.setItens(new ArrayList<>());
+        }
+        pedido.getItens().add(item);
+        pedidoRepository.save(pedido);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(item);
     }
 
-    // DELETE /api/itens/{id} -> remove um item
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        if (!itemRepo.existsById(id)) return ResponseEntity.notFound().build();
-        itemRepo.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{id}/itens")
+    public ResponseEntity<?> listarItens(@PathVariable("id") Long id) {
+        return pedidoRepository.findById(id)
+                .<ResponseEntity<?>>map(p -> ResponseEntity.ok(p.getItens()))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("message", "Pedido não encontrado", "id", id)));
     }
 }
