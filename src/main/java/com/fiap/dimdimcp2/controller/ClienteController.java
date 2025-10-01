@@ -1,6 +1,7 @@
 package com.fiap.dimdimcp2.controller;
 
 import com.fiap.dimdimcp2.model.Cliente;
+import com.fiap.dimdimcp2.dto.AtualizarClienteDTO;
 import com.fiap.dimdimcp2.dto.NovoClienteDTO;
 import com.fiap.dimdimcp2.repository.ClienteRepository;
 import jakarta.transaction.Transactional;
@@ -29,11 +30,25 @@ public class ClienteController {
     @PostMapping
     @Transactional
     public ResponseEntity<Cliente> criar(@RequestBody @Valid NovoClienteDTO body) {
-        var cliente = new Cliente();
-        cliente.setNome(body.nome());
-        cliente.setEmail(body.email());
-        var salvo = clientes.save(cliente);
+        var c = new Cliente();
+        c.setNome(body.nome());
+        c.setEmail(body.email());
+        var salvo = clientes.save(c);
         return ResponseEntity.created(URI.create("/api/v1/clientes/" + salvo.getId())).body(salvo);
+    }
+
+    // ====== PUT (atualizar) ======
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long id,
+                                             @RequestBody @Valid AtualizarClienteDTO body) {
+        return clientes.findById(id)
+                .map(c -> {
+                    c.setNome(body.nome());
+                    c.setEmail(body.email());
+                    return ResponseEntity.ok(c); // gerenciado pela JPA; já será persistido ao commit
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
