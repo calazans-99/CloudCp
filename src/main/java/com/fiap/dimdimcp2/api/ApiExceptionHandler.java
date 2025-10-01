@@ -25,7 +25,6 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneric(Exception ex) {
-        // Em produção, logue com stacktrace
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("error", "Erro interno. Verifique os logs.", "detail", ex.getClass().getSimpleName()));
     }

@@ -22,11 +22,21 @@ public class ClienteController {
         this.clientes = clientes;
     }
 
+    // GET /clientes
     @GetMapping
     public List<Cliente> listar() {
         return clientes.findAll();
     }
 
+    // GET /clientes/{id}
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> obter(@PathVariable("id") Long id) {
+        return clientes.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // POST /clientes
     @PostMapping
     @Transactional
     public ResponseEntity<Cliente> criar(@RequestBody @Valid NovoClienteDTO body) {
@@ -37,23 +47,24 @@ public class ClienteController {
         return ResponseEntity.created(URI.create("/api/v1/clientes/" + salvo.getId())).body(salvo);
     }
 
-    // ====== PUT (atualizar) ======
+    // PUT /clientes/{id}
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Cliente> atualizar(@PathVariable Long id,
+    public ResponseEntity<Cliente> atualizar(@PathVariable("id") Long id,
                                              @RequestBody @Valid AtualizarClienteDTO body) {
         return clientes.findById(id)
                 .map(c -> {
                     c.setNome(body.nome());
                     c.setEmail(body.email());
-                    return ResponseEntity.ok(c); // gerenciado pela JPA; já será persistido ao commit
+                    return ResponseEntity.ok(c);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // DELETE /clientes/{id}
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         if (!clientes.existsById(id)) return ResponseEntity.notFound().build();
         clientes.deleteById(id);
         return ResponseEntity.noContent().build();

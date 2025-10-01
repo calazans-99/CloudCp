@@ -3,7 +3,7 @@ package com.fiap.dimdimcp2.controller;
 import com.fiap.dimdimcp2.model.ItemPedido;
 import com.fiap.dimdimcp2.model.Pedido;
 import com.fiap.dimdimcp2.dto.AtualizarPedidoDTO;
-import com.fiap.dimdimcp2.dto.AtualizarStatusDTO; // se usar o endpoint opcional
+import com.fiap.dimdimcp2.dto.AtualizarStatusDTO;
 import com.fiap.dimdimcp2.dto.NovoItemPedidoDTO;
 import com.fiap.dimdimcp2.dto.NovoPedidoDTO;
 import com.fiap.dimdimcp2.repository.ClienteRepository;
@@ -33,12 +33,30 @@ public class PedidoController {
         this.itensRepo = itensRepo;
     }
 
+    // GET /pedidos
     @GetMapping
     public List<Pedido> listar() {
-        // findAll() já deve ter @EntityGraph({"cliente","itens"}) no repositório
+        // Dica: no PedidoRepository, adicione @EntityGraph({"cliente","itens"}) ao findAll()
         return pedidos.findAll();
     }
 
+    // GET /pedidos/{id}
+    @GetMapping("/{id}")
+    public ResponseEntity<Pedido> obter(@PathVariable("id") Long id) {
+        return pedidos.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // GET /pedidos/{id}/itens
+    @GetMapping("/{id}/itens")
+    public ResponseEntity<List<ItemPedido>> listarItens(@PathVariable("id") Long id) {
+        if (!pedidos.existsById(id)) return ResponseEntity.notFound().build();
+        var itens = itensRepo.findByPedidoId(id); // evita LazyInitializationException com OSIV=false
+        return ResponseEntity.ok(itens);
+    }
+
+    // POST /pedidos
     @PostMapping
     @Transactional
     public ResponseEntity<Pedido> criar(@RequestBody @Valid NovoPedidoDTO body) {
@@ -48,56 +66,37 @@ public class PedidoController {
         var pedido = new Pedido();
         pedido.setCliente(cliente);
 
-        var itens = body.itens().stream().map(i -> {
-            var it = new ItemPedido();
-            it.setDescricao(i.descricao());
-            it.setQuantidade(i.quantidade());
-            it.setValorUnitario(i.valorUnitario());
-            return it;
-        }).toList();
-
+        var itens = body.itens().stream().map(this::toItem).toList();
         pedido.addItens(itens);
 
         var salvo = pedidos.save(pedido);
         return ResponseEntity.created(URI.create("/api/v1/pedidos/" + salvo.getId())).body(salvo);
     }
 
-    @GetMapping("/{id}/itens")
-    public ResponseEntity<List<ItemPedido>> listarItens(@PathVariable Long id) {
-        if (!pedidos.existsById(id)) return ResponseEntity.notFound().build();
-        var itens = itensRepo.findByPedidoId(id);  // evita LazyInitializationException
-        return ResponseEntity.ok(itens);
-    }
-
-    // ====== PUT (atualizar pedido: status e/ou itens) ======
+    // PUT /pedidos/{id}
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Pedido> atualizar(@PathVariable Long id,
+    public ResponseEntity<Pedido> atualizar(@PathVariable("id") Long id,
                                             @RequestBody @Valid AtualizarPedidoDTO body) {
         return pedidos.findById(id)
                 .map(p -> {
-                    // Atualiza status se fornecido
                     if (body.status() != null) {
                         p.setStatus(body.status());
                     }
-
-                    // Substitui itens se vier lista (mesmo vazia? você decide. Abaixo ignora se null)
                     if (body.itens() != null) {
-                        // limpa e substitui (orphanRemoval=true em Pedido.itens cuida das remoções)
                         p.getItens().clear();
                         var novos = body.itens().stream().map(this::toItem).toList();
                         p.addItens(novos);
                     }
-
-                    return ResponseEntity.ok(p); // gerenciado; flush no commit
+                    return ResponseEntity.ok(p);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ====== (opcional) PUT só de status ======
+    // PUT /pedidos/{id}/status
     @PutMapping("/{id}/status")
     @Transactional
-    public ResponseEntity<Pedido> atualizarStatus(@PathVariable Long id,
+    public ResponseEntity<Pedido> atualizarStatus(@PathVariable("id") Long id,
                                                   @RequestBody @Valid AtualizarStatusDTO body) {
         return pedidos.findById(id)
                 .map(p -> {
@@ -105,6 +104,15 @@ public class PedidoController {
                     return ResponseEntity.ok(p);
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    // DELETE /pedidos/{id}
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
+        if (!pedidos.existsById(id)) return ResponseEntity.notFound().build();
+        pedidos.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     private ItemPedido toItem(NovoItemPedidoDTO i) {
