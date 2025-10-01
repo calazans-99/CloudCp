@@ -10,7 +10,7 @@ import com.fiap.dimdimcp2.repository.ItemPedidoRepository;
 import com.fiap.dimdimcp2.repository.PedidoRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional; // <--- importe aqui
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -21,17 +21,20 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
+
     private final PedidoRepository pedidos;
     private final ClienteRepository clientes;
     private final ItemPedidoRepository itens;
 
-    public PedidoController(PedidoRepository pedidos, ClienteRepository clientes, ItemPedidoRepository itens) {
+    public PedidoController(PedidoRepository pedidos,
+                            ClienteRepository clientes,
+                            ItemPedidoRepository itens) {
         this.pedidos = pedidos;
         this.clientes = clientes;
         this.itens = itens;
     }
 
-    @Transactional(readOnly = true) // <--- ajuste
+    @Transactional(readOnly = true)
     @GetMapping
     public List<Pedido> listar() {
         return pedidos.findAll();
@@ -40,15 +43,21 @@ public class PedidoController {
     @PostMapping
     public ResponseEntity<?> criar(@RequestBody @Valid NovoPedidoDTO dto) {
         Optional<Cliente> c = clientes.findById(dto.clienteId());
-        if (c.isEmpty()) return ResponseEntity.badRequest().body("clienteId inexistente");
+        if (c.isEmpty()) {
+            return ResponseEntity.badRequest().body("clienteId inexistente");
+        }
 
         Pedido p = new Pedido();
         p.setCliente(c.get());
         p.setStatus(dto.status());
+
         Pedido salvo = pedidos.save(p);
-        return ResponseEntity.created(URI.create("/api/pedidos/" + salvo.getId())).body(salvo);
+        return ResponseEntity
+                .created(URI.create("/api/pedidos/" + salvo.getId()))
+                .body(salvo);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> obter(@PathVariable("id") Long id) {
         return pedidos.findById(id)
@@ -58,10 +67,8 @@ public class PedidoController {
 
     @PostMapping("/{id}/itens")
     @Transactional
-    public ResponseEntity<?> adicionarItem(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid NovoItemPedidoDTO dto) {
-
+    public ResponseEntity<?> adicionarItem(@PathVariable("id") Long id,
+                                           @RequestBody @Valid NovoItemPedidoDTO dto) {
         Optional<Pedido> pedidoOpt = pedidos.findById(id);
         if (pedidoOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -73,7 +80,9 @@ public class PedidoController {
         item.setPedido(pedido);
         item.setDescricao(dto.getDescricao());
         item.setQuantidade(dto.getQuantidade());
-        item.setValorUnitario(dto.getValorUnitario() == null ? BigDecimal.ZERO : dto.getValorUnitario());
+        item.setValorUnitario(
+                dto.getValorUnitario() == null ? BigDecimal.ZERO : dto.getValorUnitario()
+        );
 
         ItemPedido salvo = itens.save(item);
 
@@ -81,5 +90,4 @@ public class PedidoController {
                 .created(URI.create("/api/pedidos/" + id + "/itens/" + salvo.getId()))
                 .body(salvo);
     }
-
 }
