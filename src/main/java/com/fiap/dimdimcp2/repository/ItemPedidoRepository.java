@@ -1,7 +1,7 @@
-// src/main/java/com/fiap/dimdimcp2/repository/PedidoRepository.java
+// src/main/java/com/fiap/dimdimcp2/repository/ItemPedidoRepository.java
 package com.fiap.dimdimcp2.repository;
 
-import com.fiap.dimdimcp2.model.Pedido;
+import com.fiap.dimdimcp2.model.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PedidoRepository extends JpaRepository<Pedido, Long> { }
+public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> { }
