@@ -1,4 +1,3 @@
--- V1__ddl_dimdim.sql
 CREATE TABLE cliente (
   id BIGINT IDENTITY(1,1) PRIMARY KEY,
   nome NVARCHAR(120) NOT NULL,
