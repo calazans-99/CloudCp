@@ -50,23 +50,41 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> obter(@PathVariable Long id) {
-        return pedidos.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Pedido> obter(@PathVariable("id") Long id) {
+        return pedidos.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/{id}/itens")
     @Transactional
-    public ResponseEntity<?> adicionarItem(@PathVariable Long id, @RequestBody @Valid NovoItemPedidoDTO dto) {
-        if (!id.equals(dto.pedidoId())) return ResponseEntity.badRequest().body("pedidoId do body difere do path");
-        Optional<Pedido> p = pedidos.findById(id);
-        if (p.isEmpty()) return ResponseEntity.notFound().build();
+    public ResponseEntity<?> adicionarItem(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid NovoItemPedidoDTO dto) {
 
+        // valida se o pedido do path e do body são iguais
+        if (!id.equals(dto.pedidoId())) {
+            return ResponseEntity.badRequest().body("O pedidoId do body difere do path");
+        }
+
+        Optional<Pedido> pedidoOpt = pedidos.findById(id);
+        if (pedidoOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Pedido pedido = pedidoOpt.get();
         ItemPedido item = new ItemPedido();
-        item.setPedido(p.get());
+        item.setPedido(pedido);
         item.setDescricao(dto.descricao());
         item.setQuantidade(dto.quantidade());
-        item.setValorUnitario(dto.valorUnitario() == null ? BigDecimal.ZERO : dto.valorUnitario());
+        item.setValorUnitario(
+                dto.valorUnitario() == null ? BigDecimal.ZERO : dto.valorUnitario()
+        );
+
         ItemPedido salvo = itens.save(item);
-        return ResponseEntity.created(URI.create("/api/pedidos/%d/itens/%d".formatted(id, salvo.getId()))).body(salvo);
+
+        return ResponseEntity
+                .created(URI.create("/api/pedidos/" + id + "/itens/" + salvo.getId()))
+                .body(salvo);
     }
 }
