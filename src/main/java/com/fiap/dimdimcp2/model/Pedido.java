@@ -1,26 +1,24 @@
+// src/main/java/com/fiap/dimdimcp2/model/Pedido.java
 package com.fiap.dimdimcp2.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.time.OffsetDateTime;
 
-@Entity
-@Table(name = "pedido")
+@Entity @Table(name = "pedido")
 public class Pedido {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
+  @ManyToOne(optional=false, fetch=FetchType.LAZY)
+  @JoinColumn(name="cliente_id", nullable=false)
+  private Cliente cliente;
 
-    @Column(name = "data_pedido", nullable = false, columnDefinition = "datetimeoffset")
-    private OffsetDateTime dataPedido = OffsetDateTime.now();
+  @Column(name="data_pedido", nullable=false, columnDefinition="datetimeoffset")
+  private OffsetDateTime dataPedido = OffsetDateTime.now();
 
-    @NotBlank
-    @Column(nullable = false, length = 30)
-    private String status = "ABERTO";
+  @NotBlank @Column(nullable=false, length=30)
+  private String status = "ABERTO";
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
