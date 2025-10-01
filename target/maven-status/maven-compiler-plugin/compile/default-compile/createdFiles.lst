@@ -10,3 +10,4 @@ com\fiap\dimdimcp2\controller\PedidoController.class
 com\fiap\dimdimcp2\repository\PedidoRepository.class
 com\fiap\dimdimcp2\dto\NovoClienteDTO.class
 com\fiap\dimdimcp2\model\ItemPedido.class
+com\fiap\dimdimcp2\model\enums\PedidoStatus.class

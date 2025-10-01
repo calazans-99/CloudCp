@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
-    // Carrega cliente e itens junto no findAll para evitar N+1 e LazyInit no JSON
+    @Override
     @EntityGraph(attributePaths = {"cliente", "itens"})
     List<Pedido> findAll();
 }

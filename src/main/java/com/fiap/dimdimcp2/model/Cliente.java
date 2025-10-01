@@ -1,29 +1,29 @@
 package com.fiap.dimdimcp2.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.OffsetDateTime;
 
 @Entity
+@Table(name = "cliente")
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 120)
     private String nome;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true, length = 120)
     private String email;
 
-    // Se você tiver o relacionamento reverso, mantenha-o ignorado no JSON
-    // para evitar ciclos e payloads enormes. Descomente se existir na sua DDL.
-    //
-    // @OneToMany(mappedBy = "cliente")
-    // @com.fasterxml.jackson.annotation.JsonIgnore
-    // private java.util.List<Pedido> pedidos = new java.util.ArrayList<>();
+    @CreationTimestamp
+    @Column(name = "criado_em", updatable = false)
+    private OffsetDateTime criadoEm;
 
-    public Cliente() {}
-
-    // getters & setters
+    // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -32,4 +32,7 @@ public class Cliente {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public OffsetDateTime getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(OffsetDateTime criadoEm) { this.criadoEm = criadoEm; }
 }
