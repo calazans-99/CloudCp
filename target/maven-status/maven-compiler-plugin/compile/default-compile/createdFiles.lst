@@ -3,6 +3,7 @@ com\fiap\dimdimcp2\api\ApiExceptionHandler.class
 com\fiap\dimdimcp2\dto\AtualizarStatusDTO.class
 com\fiap\dimdimcp2\dto\NovoItemPedidoDTO.class
 com\fiap\dimdimcp2\dto\AtualizarClienteDTO.class
+com\fiap\dimdimcp2\dto\ItemPedidoDTO.class
 com\fiap\dimdimcp2\model\Pedido.class
 com\fiap\dimdimcp2\repository\ClienteRepository.class
 com\fiap\dimdimcp2\dto\NovoPedidoDTO.class
@@ -13,5 +14,6 @@ com\fiap\dimdimcp2\controller\PedidoController.class
 com\fiap\dimdimcp2\repository\PedidoRepository.class
 com\fiap\dimdimcp2\dto\AtualizarPedidoDTO.class
 com\fiap\dimdimcp2\dto\NovoClienteDTO.class
+com\fiap\dimdimcp2\dto\PedidoResponseDTO.class
 com\fiap\dimdimcp2\model\ItemPedido.class
 com\fiap\dimdimcp2\model\enums\PedidoStatus.class

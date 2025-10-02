@@ -1,13 +1,10 @@
 package com.fiap.dimdimcp2.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public record NovoItemPedidoDTO(
-        @NotBlank String descricao,
-        @NotNull @Min(1) Integer quantidade,
+        @NotBlank @Size(max = 120) String descricao,
+        @NotNull @Positive Integer quantidade,
         @NotNull @PositiveOrZero BigDecimal valorUnitario
 ) {}
