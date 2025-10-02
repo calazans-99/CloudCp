@@ -1,6 +1,7 @@
 package com.fiap.dimdimcp2.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fiap.dimdimcp2.model.enums.PedidoStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,13 +18,14 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Evita serializar lazy internals do Hibernate no cliente
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
     @CreationTimestamp
-    @Column(name = "data_pedido", updatable = false, nullable = false)
+    @Column(name = "data_pedido", nullable = false, updatable = false)
     private OffsetDateTime dataPedido;
 
     @Enumerated(EnumType.STRING)
@@ -31,14 +33,15 @@ public class Pedido {
     private PedidoStatus status = PedidoStatus.NOVO;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // <-- este lado vai para o JSON
     private List<ItemPedido> itens = new ArrayList<>();
 
     // helpers
     public void addItem(ItemPedido item) {
         item.setPedido(this);
-        this.itens.add(item);
+        itens.add(item);
     }
-    public void addItens(List<ItemPedido> itens) { itens.forEach(this::addItem); }
+    public void addItens(List<ItemPedido> novos) { novos.forEach(this::addItem); }
 
     // getters/setters
     public Long getId() { return id; }

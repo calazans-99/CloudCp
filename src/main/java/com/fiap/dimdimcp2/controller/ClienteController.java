@@ -1,9 +1,10 @@
 package com.fiap.dimdimcp2.controller;
 
-import com.fiap.dimdimcp2.model.Cliente;
 import com.fiap.dimdimcp2.dto.AtualizarClienteDTO;
 import com.fiap.dimdimcp2.dto.NovoClienteDTO;
+import com.fiap.dimdimcp2.model.Cliente;
 import com.fiap.dimdimcp2.repository.ClienteRepository;
+import com.fiap.dimdimcp2.repository.PedidoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -11,24 +12,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
 public class ClienteController {
 
     private final ClienteRepository clientes;
+    private final PedidoRepository pedidos;
 
-    public ClienteController(ClienteRepository clientes) {
+    public ClienteController(ClienteRepository clientes, PedidoRepository pedidos) {
         this.clientes = clientes;
+        this.pedidos = pedidos;
     }
 
-    // GET /clientes
     @GetMapping
     public List<Cliente> listar() {
         return clientes.findAll();
     }
 
-    // GET /clientes/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> obter(@PathVariable("id") Long id) {
         return clientes.findById(id)
@@ -36,7 +38,6 @@ public class ClienteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST /clientes
     @PostMapping
     @Transactional
     public ResponseEntity<Cliente> criar(@RequestBody @Valid NovoClienteDTO body) {
@@ -47,7 +48,6 @@ public class ClienteController {
         return ResponseEntity.created(URI.create("/api/v1/clientes/" + salvo.getId())).body(salvo);
     }
 
-    // PUT /clientes/{id}
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<Cliente> atualizar(@PathVariable("id") Long id,
@@ -61,11 +61,16 @@ public class ClienteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE /clientes/{id}
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
+    public ResponseEntity<?> excluir(@PathVariable("id") Long id) {
         if (!clientes.existsById(id)) return ResponseEntity.notFound().build();
+
+        if (pedidos.existsByClienteId(id)) {
+            return ResponseEntity.status(409).body(
+                    Map.of("error", "Cliente possui pedidos e não pode ser excluído.")
+            );
+        }
         clientes.deleteById(id);
         return ResponseEntity.noContent().build();
     }

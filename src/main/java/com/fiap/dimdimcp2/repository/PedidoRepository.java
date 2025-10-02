@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
+    boolean existsByClienteId(Long clienteId);
+
     @Override
     @EntityGraph(attributePaths = {"cliente", "itens"})
     List<Pedido> findAll();
