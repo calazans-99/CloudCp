@@ -3,7 +3,7 @@ package com.fiap.dimdimcp2.model;
 import com.fiap.dimdimcp2.model.enums.PedidoStatus;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Pedido {
     private BigDecimal total;
 
     @Column(name = "criado_em", nullable = false)
-    private OffsetDateTime criadoEm = OffsetDateTime.now();
+    private LocalDateTime criadoEm = LocalDateTime.now();
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemPedido> itens = new ArrayList<>();
@@ -39,6 +39,7 @@ public class Pedido {
         this.total = t;
     }
 
+    // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Cliente getCliente() { return cliente; }
@@ -47,8 +48,8 @@ public class Pedido {
     public void setStatus(PedidoStatus status) { this.status = status; }
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
-    public OffsetDateTime getCriadoEm() { return criadoEm; }
-    public void setCriadoEm(OffsetDateTime criadoEm) { this.criadoEm = criadoEm; }
+    public LocalDateTime getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(LocalDateTime criadoEm) { this.criadoEm = criadoEm; }
     public List<ItemPedido> getItens() { return itens; }
     public void setItens(List<ItemPedido> itens) { this.itens = itens; }
 }
