@@ -1,32 +1,27 @@
 package com.fiap.dimdimcp2.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "item_pedido", schema = "dbo")
 public class ItemPedido {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pedido_id", nullable = false)
-    @JsonBackReference // <-- este lado NÃO vai para o JSON (evita ciclo)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 200)
     private String descricao;
 
     @Column(nullable = false)
     private Integer quantidade;
 
-    @Column(name = "valor_unitario", nullable = false, precision = 12, scale = 2)
+    @Column(name = "valor_unitario", nullable = false, precision = 18, scale = 2)
     private BigDecimal valorUnitario;
 
-    // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Pedido getPedido() { return pedido; }
