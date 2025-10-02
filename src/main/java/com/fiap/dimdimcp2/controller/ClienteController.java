@@ -9,9 +9,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -42,36 +41,57 @@ public class ClienteController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Cliente> criar(@RequestBody @Valid NovoClienteDTO dto) {
+    public ResponseEntity<?> criar(@RequestBody @Valid NovoClienteDTO dto,
+                                   UriComponentsBuilder uri) {
+
+        if (clientes.existsByEmailIgnoreCase(dto.email())) {
+            return ResponseEntity.status(409)
+                    .body(Map.of("error", "E-mail já cadastrado."));
+        }
+
         var c = new Cliente();
         c.setNome(dto.nome());
         c.setEmail(dto.email());
         var salvo = clientes.save(c);
-        return ResponseEntity.created(URI.create("/api/v1/clientes/" + salvo.getId()))
-                .body(salvo);
+
+        var location = uri.path("/api/v1/clientes/{id}")
+                .buildAndExpand(salvo.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(salvo);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarClienteDTO dto) {
-        return clientes.findById(id)
-                .map(c -> {
-                    c.setNome(dto.nome());
-                    c.setEmail(dto.email());
-                    return ResponseEntity.ok(c);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> atualizar(@PathVariable Long id,
+                                       @RequestBody @Valid AtualizarClienteDTO dto) {
+        var opt = clientes.findById(id);
+        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+
+        var atual = opt.get();
+        var novoEmail = dto.email();
+        if (!atual.getEmail().equalsIgnoreCase(novoEmail)
+                && clientes.existsByEmailIgnoreCase(novoEmail)) {
+            return ResponseEntity.status(409)
+                    .body(Map.of("error", "E-mail já cadastrado."));
+        }
+
+        atual.setNome(dto.nome());
+        atual.setEmail(novoEmail);
+        var salvo = clientes.save(atual);
+
+        return ResponseEntity.ok(salvo);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> excluir(@PathVariable("id") Long id) {
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
         if (!clientes.existsById(id)) return ResponseEntity.notFound().build();
+
         if (pedidos.existsByClienteId(id)) {
-            return ResponseEntity.status(409).body(
-                    Map.of("error", "Cliente possui pedidos e não pode ser excluído.")
-            );
+            return ResponseEntity.status(409)
+                    .body(Map.of("error", "Cliente possui pedidos e não pode ser excluído."));
         }
+
         clientes.deleteById(id);
         return ResponseEntity.noContent().build();
     }
