@@ -51,7 +51,7 @@ public class PedidoController {
                 p.getCliente().getNome(),
                 p.getStatus().name(),
                 p.getTotal(),
-                p.getCriadoEm(),
+                p.getCriadoEm().toLocalDateTime(),
                 itensDTO
         );
     }

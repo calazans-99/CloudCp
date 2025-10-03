@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;   // ⬅️ trocado
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class Pedido {
 
     // --- status ---
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20) // evita ALTER e casa com NOVO/PAGO/CANCELADO
+    @Column(nullable = false, length = 20)
     private PedidoStatus status;
 
     // --- total ---
@@ -40,14 +40,15 @@ public class Pedido {
     private BigDecimal total = BigDecimal.ZERO;
 
     // --- timestamps ---
-    @Column(name = "criado_em", nullable = false)
-    private LocalDateTime criadoEm;
+    @Column(name = "criado_em", nullable = false, columnDefinition = "datetimeoffset(6)") // ⬅️ trocado
+    private OffsetDateTime criadoEm; // ⬅️ trocado
 
     // ---------- callbacks ----------
     @PrePersist
     protected void onCreate() {
         if (criadoEm == null) {
-            criadoEm = LocalDateTime.now();
+            // mantém offset/timezone; compatível com datetimeoffset(6)
+            criadoEm = OffsetDateTime.now(); // ⬅️ trocado
         }
         if (status == null) {
             status = PedidoStatus.NOVO;
@@ -74,49 +75,22 @@ public class Pedido {
     }
 
     // ---------- getters / setters ----------
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    public List<ItemPedido> getItens() { return itens; }
+    public void setItens(List<ItemPedido> itens) { this.itens = (itens != null) ? itens : new ArrayList<>(); }
 
-    public List<ItemPedido> getItens() {
-        return itens;
-    }
+    public PedidoStatus getStatus() { return status; }
+    public void setStatus(PedidoStatus status) { this.status = status; }
 
-    public void setItens(List<ItemPedido> itens) {
-        this.itens = (itens != null) ? itens : new ArrayList<>();
-    }
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = (total != null) ? total.setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO; }
 
-    public PedidoStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PedidoStatus status) {
-        this.status = status;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = (total != null) ? total.setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
-    }
-
-    public LocalDateTime getCriadoEm() {
-        return criadoEm;
-    }
-
-    public void setCriadoEm(LocalDateTime criadoEm) {
-        this.criadoEm = criadoEm;
-    }
+    public OffsetDateTime getCriadoEm() { return criadoEm; } // ⬅️ trocado
+    public void setCriadoEm(OffsetDateTime criadoEm) { this.criadoEm = criadoEm; } // ⬅️ trocado
 
     // ---------- helpers (opcionais) ----------
     public void addItem(ItemPedido item) {
