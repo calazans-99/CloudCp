@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,11 +19,11 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      # Build limpo + repackage para garantir o FAT JAR
+      # Build limpo + fat jar
       - name: Build with Maven (force repackage, skip tests)
         run: mvn -B -DskipTests clean package spring-boot:repackage
 
-      # Garante que o jar enviado é o fat jar (não o *original*.jar)
+      # Garante que é o fat jar (não o original)
       - name: Find Spring Boot fat JAR (non-original)
         id: findjar
         run: |
@@ -43,8 +42,8 @@ jobs:
           echo "Usando: $BOOT_JAR"
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: 'webapp-cp2-rm55662'
+          app-name: webapp-cp2-rm55662
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: '${{ steps.findjar.outputs.bootjar }}'
+          package: ${{ steps.findjar.outputs.bootjar }}
