@@ -1,38 +1,18 @@
-# DimDim CP2 — Java (Spring Boot) + Azure SQL
+# Cloud CP Java (Spring Boot)
 
-App de exemplo para o Checkpoint 2 (DimDim): API REST com `cliente`, `pedido`, `item_pedido`.
-- Java 17 + Spring Boot 3
-- Azure SQL (PaaS)
-- Flyway (DDL em `V1__ddl_dimdim.sql`)
-- Swagger UI em `/swagger-ui/index.html`
+Projeto exemplo pronto para Azure App Service (Java SE, JAR).
 
-## Rodando local (opcional)
-1. Defina as variáveis de ambiente conforme o deploy no Azure App Service:
-   ```bash
-   export SPRING_DATASOURCE_URL="jdbc:sqlserver://<server>.database.windows.net:1433;database=<db>;user=<user>@<server>;password=<pwd>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
-   export SPRING_DATASOURCE_USERNAME="<user>"
-   export SPRING_DATASOURCE_PASSWORD="<pwd>"
-   ```
-2. Rode:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
+## Build & Run
+```bash
+mvn -DskipTests package
+java -jar target/cloudcp-app-0.0.1-SNAPSHOT.jar
+```
+Acesse: http://localhost:8080/swagger-ui.html
 
-## Endpoints (exemplos)
-- `GET /api/clientes`
-- `POST /api/clientes` body:
-  ```json
-  {"nome":"Alice","email":"alice@fiap.com"}
-  ```
-- `POST /api/pedidos` body:
-  ```json
-  {"clienteId":1, "status":"ABERTO"}
-  ```
-- `POST /api/pedidos/{id}/itens` body:
-  ```json
-  {"pedidoId":1, "descricao":"Mensalidade", "quantidade":1, "valorUnitario":100.00}
-  ```
+## Banco de Dados (Azure SQL)
+Defina:
+- `SPRING_DATASOURCE_URL`
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
 
-## Observações
-- Em produção, troque a senha do DB e restrinja o firewall do Azure SQL a partir do seu IP/App Service.
-- Flyway valida o schema ao subir (`ddl-auto=validate`).
+As entidades usam `OffsetDateTime` + `datetimeoffset(6)`. O Hibernate cria/atualiza o schema (`ddl-auto=update`).
