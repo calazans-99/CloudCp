@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d536cf3-eea8-4c2d-b7ac-7ee803b7fc52" name="Changes" comment="att">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/config/OpenApiConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/controller/ClienteController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/controller/PedidoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/cliente/ClienteCreateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/cliente/ClienteDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/ItemCreateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoCreateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoStatusUpdateDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/mapper/PedidoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/service/PedidoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/ItemPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/ItemPedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Pedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repo/ClienteRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/ClienteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repo/ItemPedidoRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/ItemPedidoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repo/PedidoRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/PedidoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/web/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/web/ClienteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/web/PedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/web/PedidoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="0d536cf3-eea8-4c2d-b7ac-7ee803b7fc52" name="Changes" comment="att" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -326,7 +303,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759527744490</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="att">
+      <option name="closed" value="true" />
+      <created>1759532268850</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1759532268850</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
