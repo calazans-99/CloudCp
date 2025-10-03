@@ -1,0 +1,10 @@
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\model\ItemPedido.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\CloudCpApplication.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\model\Pedido.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\repo\ClienteRepo.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\model\Cliente.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\web\ClienteController.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\model\enums\PedidoStatus.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\repo\PedidoRepo.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\repo\ItemPedidoRepo.java
+D:\cpcloud\java\src\main\java\com\fiap\cloudcp\web\PedidoController.java
