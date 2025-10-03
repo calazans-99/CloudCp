@@ -1,7 +1,7 @@
 package com.fiap.cloudcp.web;
 
 import com.fiap.cloudcp.model.Cliente;
-import com.fiap.cloudcp.repo.ClienteRepo;
+import com.fiap.cloudcp.repository.ClienteRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
-    private final ClienteRepo repo;
-    public ClienteController(ClienteRepo repo) { this.repo = repo; }
+    private final ClienteRepository repo;
+    public ClienteController(ClienteRepository repo) { this.repo = repo; }
 
     @GetMapping public List<Cliente> list() { return repo.findAll(); }
 

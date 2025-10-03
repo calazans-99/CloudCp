@@ -1,0 +1,10 @@
+com\fiap\cloudcp\CloudCpApplication.class
+com\fiap\cloudcp\repo\PedidoRepo.class
+com\fiap\cloudcp\model\ItemPedido.class
+com\fiap\cloudcp\model\Pedido.class
+com\fiap\cloudcp\web\ClienteController.class
+com\fiap\cloudcp\web\PedidoController.class
+com\fiap\cloudcp\model\Cliente.class
+com\fiap\cloudcp\repo\ClienteRepo.class
+com\fiap\cloudcp\repo\ItemPedidoRepo.class
+com\fiap\cloudcp\model\enums\PedidoStatus.class

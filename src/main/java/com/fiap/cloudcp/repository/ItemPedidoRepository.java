@@ -1,0 +1,6 @@
+package com.fiap.cloudcp.repository;
+
+import com.fiap.cloudcp.model.ItemPedido;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {}

@@ -29,51 +29,36 @@ public class Pedido {
 
     @NotNull
     @Column(precision = 18, scale = 2, nullable = false)
-    private BigDecimal total = BigDecimal.ZERO;
+    private BigDecimal total;
 
     @Column(name = "criado_em", nullable = false, columnDefinition = "datetimeoffset(6)")
     private OffsetDateTime criadoEm;
 
     @PrePersist
-    void onCreate() {
+    void pre() {
         if (criadoEm == null) criadoEm = OffsetDateTime.now();
         if (status == null) status = PedidoStatus.NOVO;
-        if (total == null) total = BigDecimal.ZERO;
+        if (total == null) total = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public void addItem(ItemPedido item) {
-        if (item == null) return;
-        item.setPedido(this);
-        this.itens.add(item);
-        recalcularTotal();
-    }
-    public void removeItem(ItemPedido item) {
-        if (item == null) return;
-        this.itens.remove(item);
-        item.setPedido(null);
-        recalcularTotal();
-    }
     public void recalcularTotal() {
-        BigDecimal soma = BigDecimal.ZERO;
-        if (itens != null) {
-            for (ItemPedido i : itens) {
-                if (i == null || i.getQuantidade() == null || i.getValorUnitario() == null) continue;
-                BigDecimal linha = i.getValorUnitario().multiply(BigDecimal.valueOf(i.getQuantidade())).setScale(2, RoundingMode.HALF_UP);
-                soma = soma.add(linha);
-            }
-        }
-        this.total = soma.setScale(2, RoundingMode.HALF_UP);
+        var soma = itens.stream()
+                .filter(i -> i.getQuantidade()!=null && i.getValorUnitario()!=null)
+                .map(i -> i.getValorUnitario().multiply(BigDecimal.valueOf(i.getQuantidade())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        total = soma.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public Long getId() {return id;}
-    public Cliente getCliente() {return cliente;}
-    public void setCliente(Cliente cliente) {this.cliente = cliente;}
-    public List<ItemPedido> getItens() {return itens;}
-    public void setItens(List<ItemPedido> itens) {this.itens = (itens != null) ? itens : new ArrayList<>();}
-    public PedidoStatus getStatus() {return status;}
-    public void setStatus(PedidoStatus status) {this.status = status;}
-    public BigDecimal getTotal() {return total;}
-    public void setTotal(BigDecimal total) {this.total = (total != null) ? total.setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;}
-    public OffsetDateTime getCriadoEm() {return criadoEm;}
-    public void setCriadoEm(OffsetDateTime criadoEm) {this.criadoEm = criadoEm;}
+    public Long getId() { return id; }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+    public List<ItemPedido> getItens() { return itens; }
+    public void setItens(List<ItemPedido> itens) { this.itens = itens; }
+    public PedidoStatus getStatus() { return status; }
+    public void setStatus(PedidoStatus status) { this.status = status; }
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
+    public OffsetDateTime getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(OffsetDateTime criadoEm) { this.criadoEm = criadoEm; }
 }
