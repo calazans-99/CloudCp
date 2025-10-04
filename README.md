@@ -1,18 +1,33 @@
-# Cloud CP Java (Spring Boot)
+# CloudCp (Java 21, Spring Boot 3.3.5)
 
-Projeto exemplo pronto para Azure App Service (Java SE, JAR).
+API do CP2 (Clientes e Pedidos) preparada para Azure App Service + Azure SQL.
 
-## Build & Run
+## Requisitos
+- JDK 21
+- Maven 3.9+
+- Azure SQL (tabelas com `datetimeoffset(6)` para `criado_em`)
+
+## Rodar local
 ```bash
-mvn -DskipTests package
-java -jar target/cloudcp-app-0.0.1-SNAPSHOT.jar
+mvn clean package -DskipTests
+java -jar target/cloudcp-0.0.1-SNAPSHOT.jar
 ```
-Acesse: http://localhost:8080/swagger-ui.html
+Swagger: http://localhost:8080/swagger-ui.html
 
-## Banco de Dados (Azure SQL)
-Defina:
-- `SPRING_DATASOURCE_URL`
-- `SPRING_DATASOURCE_USERNAME`
-- `SPRING_DATASOURCE_PASSWORD`
+## Configuração Azure SQL
+Edite `src/main/resources/application.properties` com seu servidor, DB, usuário e senha.
 
-As entidades usam `OffsetDateTime` + `datetimeoffset(6)`. O Hibernate cria/atualiza o schema (`ddl-auto=update`).
+## Endpoints principais
+- `POST /api/clientes`
+- `GET /api/clientes`
+- `GET /api/clientes/{id}`
+- `POST /api/pedidos`
+- `GET /api/pedidos`
+- `GET /api/pedidos/{id}`
+- `PATCH /api/pedidos/{id}/status`
+- `POST /api/pedidos/{id}/itens`
+- `DELETE /api/pedidos/{id}`
+
+## Observações
+- Campos `criado_em` mapeados para `datetimeoffset(6)` e `OffsetDateTime` no Java.
+- `ddl-auto=validate` (recomendado em prod). Em dev, pode usar `update`.

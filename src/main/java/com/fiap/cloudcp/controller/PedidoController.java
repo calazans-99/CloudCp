@@ -1,7 +1,6 @@
 package com.fiap.cloudcp.controller;
 
 import com.fiap.cloudcp.dto.pedido.*;
-import com.fiap.cloudcp.mapper.PedidoMapper;
 import com.fiap.cloudcp.service.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,39 +17,38 @@ import java.util.List;
 public class PedidoController {
 
     private final PedidoService service;
-    private final PedidoMapper mapper;
 
-    public PedidoController(PedidoService s, PedidoMapper m) { this.service = s; this.mapper = m; }
+    public PedidoController(PedidoService s) { this.service = s; }
 
     @Operation(summary = "Cria pedido (clienteId + itens)")
     @PostMapping
     public ResponseEntity<PedidoDTO> criar(@Valid @RequestBody PedidoCreateDTO dto) {
         var saved = service.criar(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(saved));
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @Operation(summary = "Lista pedidos")
     @GetMapping
     public List<PedidoDTO> listar() {
-        return service.listar().stream().map(mapper::toDTO).toList();
+        return service.listar();
     }
 
     @Operation(summary = "Busca pedido por id")
     @GetMapping("/{id}")
     public PedidoDTO obter(@PathVariable Long id) {
-        return mapper.toDTO(service.obter(id));
+        return service.obter(id);
     }
 
     @Operation(summary = "Atualiza status do pedido")
     @PatchMapping("/{id}/status")
     public PedidoDTO atualizarStatus(@PathVariable Long id, @Valid @RequestBody PedidoStatusUpdateDTO dto) {
-        return mapper.toDTO(service.atualizarStatus(id, dto.status()));
+        return service.atualizarStatus(id, dto.status());
     }
 
     @Operation(summary = "Adiciona item ao pedido")
     @PostMapping("/{id}/itens")
     public PedidoDTO addItem(@PathVariable Long id, @Valid @RequestBody ItemCreateDTO dto) {
-        return mapper.toDTO(service.adicionarItem(id, dto));
+        return service.adicionarItem(id, dto);
     }
 
     @Operation(summary = "Exclui pedido")

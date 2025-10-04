@@ -1,5 +1,2 @@
 package com.fiap.cloudcp.model.enums;
-
-public enum PedidoStatus {
-    NOVO, PAGO, CANCELADO
-}
+public enum PedidoStatus { NOVO, PAGO, CANCELADO }

@@ -4,7 +4,67 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d536cf3-eea8-4c2d-b7ac-7ee803b7fc52" name="Changes" comment="att" />
+    <list default="true" id="0d536cf3-eea8-4c2d-b7ac-7ee803b7fc52" name="Changes" comment="att">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/config/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/service/ClienteService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/service/impl/ClienteServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/service/impl/PedidoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/CloudCpApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/CloudCpApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/config/OpenApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/config/OpenApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/controller/ClienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/controller/PedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/controller/PedidoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/cliente/ClienteCreateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/cliente/ClienteCreateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/cliente/ClienteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/cliente/ClienteDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/ItemCreateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/ItemCreateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/ItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/ItemDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoCreateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoCreateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoStatusUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/dto/pedido/PedidoStatusUpdateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/mapper/PedidoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/mapper/PedidoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/ItemPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/ItemPedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/enums/PedidoStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/model/enums/PedidoStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/ClienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/ClienteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/ItemPedidoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/ItemPedidoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/PedidoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/repository/PedidoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/service/PedidoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/service/PedidoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/web/ClienteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fiap/cloudcp/web/PedidoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/CloudCpApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/config/OpenApiConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/controller/ClienteController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/controller/PedidoController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/cliente/ClienteCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/cliente/ClienteDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/pedido/ItemCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/pedido/ItemDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/pedido/PedidoCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/pedido/PedidoDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/dto/pedido/PedidoStatusUpdateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/mapper/PedidoMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/model/Cliente.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/model/ItemPedido.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/model/Pedido.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/model/enums/PedidoStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/repository/ClienteRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/repository/ItemPedidoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/repository/PedidoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/service/PedidoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/web/ClienteController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fiap/cloudcp/web/PedidoController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/cloudcp-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/cloudcp-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +92,9 @@
     &quot;accountId&quot;: &quot;598707b6-9e31-4439-8fc7-fa88188a8268&quot;
   }
 }</component>
+  <component name="MavenImportPreferences">
+    <option name="explicitlyEnabledProfiles" value="native,nativeTest" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
@@ -44,17 +107,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/cpcloud/CloudCp",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="CloudCp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="CloudCp" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0d536cf3-eea8-4c2d-b7ac-7ee803b7fc52" name="Changes" comment="" />
