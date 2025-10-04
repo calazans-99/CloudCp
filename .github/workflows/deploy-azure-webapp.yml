@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: webapp-cp2-rm55662
-  JAVA_VERSION: "17"
+  JAVA_VERSION: "21"
 
 jobs:
   build-and-deploy:
